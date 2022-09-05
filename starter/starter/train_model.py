@@ -1,15 +1,18 @@
 # Script to train machine learning model.
 import os
+import sys
 import pandas as pd
 import pickle
 from sklearn.model_selection import train_test_split
 
 # Add the necessary imports for the starter code.
+file_dir = os.path.dirname(__file__)
+sys.path.insert(0, file_dir)
+
 from ml.data import process_data
 from ml.model import train_model, inference, compute_model_metrics
 
 # Add code to load in the data.
-file_dir = os.path.dirname(__file__)
 data = pd.read_csv(os.path.join(file_dir, '../data/clean_census.csv'))
 
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
