@@ -27,23 +27,26 @@ def slice_metrics(model, encoder, lb, data, slice_feature, categorical_features=
     -------
     None
     """
-    print("Performance on slices of data based on", slice_feature)
-    print("*****************************************************")
+    original_stdout = sys.stdout
+    with open(os.path.join(os.path.dirname(__file__), "slice_output.txt"), "w") as f:
+        sys.stdout = f
+        print("Performance on slices of data based on", slice_feature)
+        print("*****************************************************")
+        X, y, _, _ = process_data(
+            data, categorical_features=categorical_features, label="salary", training=True
+        )
+        preds = inference(model, X)
 
-    X, y, encoder, lb = process_data(
-        data, categorical_features=categorical_features, label="salary", training=False, encoder=encoder, lb=lb
-    )
-    preds = inference(model, X)
-
-    for slice_value in data[slice_feature].unique():
-        slice_index = data.index[data[slice_feature] == slice_value]
-        
-        print(slice_feature, '=', slice_value)
-        print('data size:', len(slice_index))
-        print('precision: {}, recall: {}, fbeta: {}'.format(
-            *compute_model_metrics(y[slice_index], preds[slice_index])
-        ))
-        print('-------------------------------------------------')
+        for slice_value in data[slice_feature].unique():
+            slice_index = data.index[data[slice_feature] == slice_value]
+            
+            print(slice_feature, '=', slice_value)
+            print('data size:', len(slice_index))
+            print('precision: {}, recall: {}, fbeta: {}'.format(
+                *compute_model_metrics(y[slice_index], preds[slice_index])
+            ))
+            print('-------------------------------------------------')
+        sys.stdout = original_stdout
 
 if __name__ == '__main__':
     cat_features = [
