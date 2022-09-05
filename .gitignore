@@ -1,9 +1,8 @@
 __pycache__
+.pytest_cache
+data/census.csv
+data/clean_census.csv
+model/rf_model.pkl
+mode/encoder.pkl
+mode/lb.pkl
 starter/__pycache__
-starter/.pytest_cache
-starter/data/census.csv
-starter/data/clean_census.csv
-starter/model/rf_model.pkl
-starter/mode/encoder.pkl
-starter/mode/lb.pkl
-starter/starter/__pycache__
